@@ -1,23 +1,23 @@
 service: start-stop-instances
 
-frameworkVersion: '3'
-
+frameworkVersion: "3"
 
 provider:
   name: aws
+  region: us-east-2
   runtime: python3.9
 
 functions:
-  rateHandler:
-    handler: handler.run
+  cronUpHandler:
+    handler: up.run
     events:
-      # Invoke Lambda function every minute
-      - schedule: rate(1 minute)
-  cronHandler:
-    handler: handler.run
+      # Start stopped instances every week day at 10:00 AM
+      - schedule: cron(0 10 * * 1-5 *)
+  cronDownHandler:
+    handler: down.run
     events:
-      # Invoke Lambda function every 2nd minute from Mon-Fri
-      - schedule: cron(0/2 * ? * MON-FRI *)
+      # Stop instances every week day at 08:00 PM
+      - schedule: cron(0 20 * * 1-5 *)
 
 plugins:
   - serverless-python-requirements
