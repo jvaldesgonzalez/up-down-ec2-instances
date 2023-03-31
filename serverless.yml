@@ -13,12 +13,12 @@ functions:
     handler: up.run
     events:
       # Start stopped instances every week day at 10:00 AM
-      - schedule: cron(0 10 * * MON-FRI *)
+      - schedule: cron(0 10 ? * MON-FRI *)
   cronDownHandler:
     handler: down.run
     events:
       # Stop instances every week day at 08:00 PM
-      - schedule: cron(0 20 * * MON-FRI *)
+      - schedule: cron(0 20 ? * MON-FRI *)
 
 plugins:
   - serverless-python-requirements
